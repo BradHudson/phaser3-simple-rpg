@@ -3,4 +3,5 @@ export const SCENES = {
   HUD: 'Hud',
   FIRST_LEVEL: 'FirstLevel',
   SECOND_LEVEL: 'SecondLevel',
+  MAIN_MENU: 'MainMenu'
 };
