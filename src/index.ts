@@ -1,4 +1,5 @@
 import 'phaser';
+import { MainMenu } from './scenes/MainMenu';
 import { FirstLevel } from './scenes/FirstLevel';
 import { SecondLevel } from './scenes/SecondLevel';
 import { Preloader } from './scenes/Preloader';
@@ -20,7 +21,7 @@ class PhaserGame extends Phaser.Game {
         //   debug: true,
         // },
       },
-      scene: [Preloader, FirstLevel, SecondLevel, GameManager, HUD],
+      scene: [Preloader, MainMenu, FirstLevel, SecondLevel, GameManager, HUD],
     };
     super(config);
   }
