@@ -1,5 +1,6 @@
 import 'phaser';
 import { MainMenu } from './scenes/MainMenu';
+import { CharacterSelect } from './scenes/CharacterSelect';
 import { FirstLevel } from './scenes/FirstLevel';
 import { SecondLevel } from './scenes/SecondLevel';
 import { Preloader } from './scenes/Preloader';
@@ -11,8 +12,8 @@ class PhaserGame extends Phaser.Game {
     const config = {
       type: Phaser.AUTO,
       parent: 'game-container',
-      width: 400,
-      height: 250,
+      width: 450,
+      height: 300,
       zoom: 2.5,
       pixelArt: true,
       physics: {
@@ -21,7 +22,7 @@ class PhaserGame extends Phaser.Game {
         //   debug: true,
         // },
       },
-      scene: [Preloader, MainMenu, FirstLevel, SecondLevel, GameManager, HUD],
+      scene: [Preloader, MainMenu, CharacterSelect, FirstLevel, SecondLevel, GameManager, HUD],
     };
     super(config);
   }
