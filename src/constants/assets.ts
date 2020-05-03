@@ -8,6 +8,7 @@ export const ASSETS = {
     HEART: 'heart',
     HEART_EMPTY: 'heart-empty',
     TOMB: 'tomb',
+    SWORD: 'sword',
     PLAYER_IDLE_DOWN: 'player-idle-down',
     PLAYER_IDLE_UP: 'player-idle-up',
     PLAYER_IDLE_SIDE: 'player-idle-side',

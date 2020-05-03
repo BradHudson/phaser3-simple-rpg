@@ -18,9 +18,9 @@ class PhaserGame extends Phaser.Game {
       pixelArt: true,
       physics: {
         default: 'arcade',
-        // arcade: {
-        //   debug: true,
-        // },
+        arcade: {
+          debug: true,
+        },
       },
       scene: [Preloader, MainMenu, CharacterSelect, FirstLevel, SecondLevel, GameManager, HUD],
     };

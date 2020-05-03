@@ -20,6 +20,7 @@ interface InterSceneData {
 
 export abstract class AbstractScene extends Phaser.Scene {
   public player: Player;
+  public container: Phaser.GameObjects.Container;
   public cursors: CursorKeys;
   public npcs: Npc[];
   public monsters: Monster[];
@@ -58,6 +59,24 @@ export abstract class AbstractScene extends Phaser.Scene {
 
     this.monsters.map((monster: Monster) => monster.updateMonster());
     this.player.updatePlayer(keyPressed);
+      if (this.cursors.down.isDown){
+        this.container.body.velocity.y = 80;
+        this.container.body.velocity.x = 0;
+      } else if (this.cursors.up.isDown) {
+        this.container.body.velocity.y = -80;
+        this.container.body.velocity.x = 0;
+
+      } else if (this.cursors.right.isDown) {
+        this.container.body.velocity.x = 80;
+        this.container.body.velocity.y = 0;
+
+      } else if (this.cursors.left.isDown) {
+        this.container.body.velocity.x = -80;
+        this.container.body.velocity.y = 0;
+      } else {
+        this.container.body.velocity.x = 0;
+        this.container.body.velocity.y = 0;
+    }
   }
 
   protected init(data: InterSceneData) {
@@ -70,7 +89,18 @@ export abstract class AbstractScene extends Phaser.Scene {
     );
 
     const playerInitialPosition = this.getPlayerInitialPosition(levelChangerObjectLayer, data);
-    this.player = new Player(this, playerInitialPosition.x, playerInitialPosition.y);
+    this.player = new Player(this, 0, 0);
+    var sprite2 = this.add.sprite(2, 0, 'sword');
+    sprite2.setScale(.3,.3);
+
+    this.container = this.add.container(playerInitialPosition.x, playerInitialPosition.y);
+    this.container.setSize(16, 16, true);
+    this.container.add(this.player);
+    this.container.add(sprite2);
+    this.physics.world.enable(this.container);
+    this.container.body.setVelocity(0).setCollideWorldBounds(true);
+
+    
 
     const npcsMapObjects = this.map.objects.find(o => o.name === MAP_CONTENT_KEYS.objects.NPCS);
     const npcs: any = npcsMapObjects ? npcsMapObjects.objects : [];
@@ -99,7 +129,7 @@ export abstract class AbstractScene extends Phaser.Scene {
       levelChangerObjectLayer.objects.map((o: any) => {
         const zone = this.add.zone(o.x, o.y, o.width, o.height);
         this.physics.add.existing(zone);
-        this.physics.add.overlap(zone, this.player, () => {
+        this.physics.add.overlap(zone, this.container, () => {
           this.scene.start(o.properties.scene, { comesFrom: this.scene.key });
         });
       });
@@ -129,13 +159,13 @@ export abstract class AbstractScene extends Phaser.Scene {
     this.monsterGroup = this.physics.add.group(this.monsters.map(monster => monster));
     this.physics.add.collider(this.monsterGroup, this.layers.terrain);
     this.physics.add.collider(this.monsterGroup, this.layers.deco);
-    this.physics.add.collider(this.monsterGroup, this.player, (_: Player, m: Monster) => {
+    this.physics.add.collider(this.monsterGroup, this.container, (_: Player, m: Monster) => {
       m.attack();
     });
 
-    this.physics.add.collider(this.player, this.layers.terrain);
-    this.physics.add.collider(this.player, this.layers.deco);
-    this.npcs.map((npc: Npc) => this.physics.add.collider(npc, this.player, npc.talk));
+    this.physics.add.collider(this.container, this.layers.terrain);
+    this.physics.add.collider(this.container, this.layers.deco);
+    this.npcs.map((npc: Npc) => this.physics.add.collider(npc, this.container, npc.talk));
   }
 
   private getPlayerInitialPosition(
@@ -186,6 +216,6 @@ export abstract class AbstractScene extends Phaser.Scene {
   private initCamera() {
     this.cameras.main.setRoundPixels(true);
     this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
-    this.cameras.main.startFollow(this.player, true, CAMERA_LERP, CAMERA_LERP);
+    this.cameras.main.startFollow(this.container, true, CAMERA_LERP, CAMERA_LERP);
   }
 }

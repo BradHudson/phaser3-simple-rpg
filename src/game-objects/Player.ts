@@ -144,16 +144,16 @@ export class Player extends Character {
   private go(direction: Orientation, shouldAnimate = true) {
     switch (direction) {
       case Orientation.Left:
-        this.setVelocityX(-PLAYER_SPEED);
+        // this.setVelocityX(-PLAYER_SPEED);
         break;
       case Orientation.Right:
-        this.setVelocityX(PLAYER_SPEED);
+        // this.setVelocityX(PLAYER_SPEED);
         break;
       case Orientation.Up:
-        this.setVelocityY(-PLAYER_SPEED);
+        // this.setVelocityY(-PLAYER_SPEED);
         break;
       case Orientation.Down:
-        this.setVelocityY(PLAYER_SPEED);
+        // this.setVelocityY(PLAYER_SPEED);
         break;
       default:
         break;
@@ -222,12 +222,12 @@ export class Player extends Character {
   }
 
   private handleShootKey(keyPressed) {
-    if (keyPressed.space) {
-      if (this.isLoading) {
-        return;
-      }
-      this.reload();
-      this.shoot();
-    }
-  }
+  //   if (keyPressed.space) {
+  //     if (this.isLoading) {
+  //       return;
+  //     }
+  //     this.reload();
+  //     this.shoot();
+  //   }
+  // }
 }
